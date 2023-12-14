@@ -6,11 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.util.List;
+
 @Data
-@AllArgsConstructor @NoArgsConstructor @Builder
-public class ProductDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ProductResponseDTO {
+    private Long id;
     private String name;
     private double price;
     private String description;

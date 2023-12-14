@@ -20,8 +20,7 @@ public class Product {
     private double price;
     private String description;
     private int stockQuantity;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JsonIgnore
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Image> images;
 
 }
