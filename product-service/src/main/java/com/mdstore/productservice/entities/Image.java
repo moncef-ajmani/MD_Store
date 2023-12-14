@@ -19,7 +19,6 @@ public class Image {
     @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonIgnore
-    //@Transient
     private Product product;
 
     private boolean primaryImage;
