@@ -2,7 +2,6 @@ package com.mdstore.productservice.web;
 
 import com.mdstore.productservice.DTOs.ProductRequestDTO;
 import com.mdstore.productservice.DTOs.ProductResponseDTO;
-import com.mdstore.productservice.exception.ProductNotFoundException;
 import com.mdstore.productservice.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +18,25 @@ public class ProductRestController {
         this.productService = productService;
     }
 
-    @GetMapping("/product")
+    @GetMapping("/products")
     public List<ProductResponseDTO> productList(){
         return productService.getAllProducts();
     }
 
-    @PostMapping("/product")
+    @PostMapping("/products")
     public ResponseEntity<ProductResponseDTO> saveProduct(@RequestBody ProductRequestDTO productDTO){
         ProductResponseDTO responseDTO =  productService.save(productDTO);
         return ResponseEntity.created(URI.create("/product/"+responseDTO.getId())).body(responseDTO);
     }
 
-    @PutMapping("/product/{id}")
+    @PutMapping("/products/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id,@RequestBody ProductRequestDTO productDTO){
         ProductResponseDTO responseDTO = productService.update(id, productDTO);
 
         return ResponseEntity.ok(responseDTO);
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/products/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
         productService.delete(id);
         String successMessage = "Product with ID " + id + " deleted successfully";
