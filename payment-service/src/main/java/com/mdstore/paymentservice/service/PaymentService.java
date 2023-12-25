@@ -24,6 +24,7 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
     public Payment getPaymentByOrder(Long orderId){
+        System.out.println(orderId);
         return paymentRepository.findByOrderId(orderId).get();
     }
 }
