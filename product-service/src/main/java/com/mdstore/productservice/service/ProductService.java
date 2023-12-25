@@ -22,8 +22,14 @@ public class ProductService {
         this.productMapper = productMapper;
     }
 
+
+
     public List<ProductResponseDTO> getAllProducts() {
         return productRepository.findAll().stream().map(productMapper::from).collect(Collectors.toList());
+    }
+
+    public ProductResponseDTO getProductById(Long id){
+        return productMapper.from(productRepository.findById(id).get());
     }
 
     public ProductResponseDTO save(ProductRequestDTO productDTO){
@@ -47,7 +53,7 @@ public class ProductService {
         productMapper.update(existingProduct,updatedProductDTO);
 
         // Set the product for each image in the updated product's image list
-        for (Image image : existingProduct.getImages()) {
+        for (Image image : updatedProductDTO.getImages()) {
             image.setProduct(existingProduct);
         }
 

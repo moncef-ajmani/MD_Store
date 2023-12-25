@@ -1,11 +1,10 @@
 package com.mdstore.cartservice.web;
 
+import com.mdstore.cartservice.DTOs.CartItemRequestDTO;
 import com.mdstore.cartservice.entities.Cart;
 import com.mdstore.cartservice.service.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +25,16 @@ public class CartRestController {
     public Cart findCartById(@PathVariable Long id){
         return cartService.findCartById(id);
     }
+
+    @PostMapping("/carts/{id}/addItem")
+    public ResponseEntity<Object> addToCart(@PathVariable Long id, @RequestBody CartItemRequestDTO cartItemRequestDTO){
+        Object result = cartService.addItemToCart(id, cartItemRequestDTO);
+        if (result instanceof Cart) {
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
+
 
 
 }

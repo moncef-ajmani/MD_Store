@@ -23,6 +23,10 @@ public class ProductRestController {
         return productService.getAllProducts();
     }
 
+    @GetMapping("/products/{id}")
+    public ProductResponseDTO getProductById(@PathVariable Long id){
+        return productService.getProductById(id);
+    }
     @PostMapping("/products")
     public ResponseEntity<ProductResponseDTO> saveProduct(@RequestBody ProductRequestDTO productDTO){
         ProductResponseDTO responseDTO =  productService.save(productDTO);

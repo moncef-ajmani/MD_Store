@@ -1,6 +1,7 @@
 package com.mdstore.cartservice.modal;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 public class User {
