@@ -13,15 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 
 @RestController
-@RolesAllowed({"ADMIN","USER"})
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     UserRepository userRepository;
 
     @GetMapping("/{id}")
-    @PreAuthorize("#user.id == #id")
-    public ResponseEntity user(@AuthenticationPrincipal User user, @PathVariable Long id){
+    public ResponseEntity user(@PathVariable Long id){
+        System.out.println(id);
         return ResponseEntity.ok(UserDTO.from(userRepository.findUserById(id)));
     }
 
