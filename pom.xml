@@ -43,5 +43,13 @@
 			</plugin>
 		</plugins>
 	</build>
+	<packaging>pom</packaging>
+	<modules>
+		<module>gateway-service</module>
+		<module>cart-service</module>
+		<module>product-service</module>
+		<module>registry-service</module>
+		<module>auth-service</module>
 
+	</modules>
 </project>

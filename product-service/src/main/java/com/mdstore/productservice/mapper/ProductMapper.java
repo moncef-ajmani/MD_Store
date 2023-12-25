@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductMapper {
-    private ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public ProductResponseDTO from (Product product){
         return modelMapper.map(product, ProductResponseDTO.class);
