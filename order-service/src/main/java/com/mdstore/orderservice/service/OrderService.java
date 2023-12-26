@@ -26,7 +26,8 @@ public class OrderService {
     public Order save(OrderRequestDTO orderRequestDTO){
         Order order = orderMapper.from(orderRequestDTO);
         System.out.println("Order: "+order);
-
+//      if product in stock save the order and update product else return error message
+        orderRepository.save(order);
         return order;
     }
 }

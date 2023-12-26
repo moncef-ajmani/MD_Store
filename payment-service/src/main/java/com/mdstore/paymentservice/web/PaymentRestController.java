@@ -3,6 +3,9 @@ package com.mdstore.paymentservice.web;
 import com.mdstore.paymentservice.DTOs.PaymentRequestDTO;
 import com.mdstore.paymentservice.entities.Payment;
 import com.mdstore.paymentservice.service.PaymentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,12 +16,11 @@ public class PaymentRestController {
         this.paymentService = paymentService;
     }
     @PostMapping("/payments")
-    public Payment processPayment(@RequestBody PaymentRequestDTO paymentRequestDTO){
-        Payment payment = paymentService.processPayment(paymentRequestDTO);
-        return payment;
+    public ResponseEntity<Payment> processPayment(@RequestBody PaymentRequestDTO paymentRequestDTO){
+        return new ResponseEntity<>(paymentService.processPayment(paymentRequestDTO), HttpStatus.CREATED);
     }
     @GetMapping("/payments/order/{id}")
-    public Payment getPaymentByOrder(@PathVariable Long id){
-        return paymentService.getPaymentByOrder(id);
+    public ResponseEntity<Payment> getPaymentByOrder(@PathVariable Long id){
+        return new ResponseEntity<>(paymentService.getPaymentByOrder(id),HttpStatus.OK);
     }
 }

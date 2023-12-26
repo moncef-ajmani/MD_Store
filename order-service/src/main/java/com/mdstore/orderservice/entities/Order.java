@@ -1,5 +1,6 @@
 package com.mdstore.orderservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mdstore.orderservice.modal.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

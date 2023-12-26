@@ -12,6 +12,7 @@ public class OrderItem {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
     @Transient
     private Product product;
