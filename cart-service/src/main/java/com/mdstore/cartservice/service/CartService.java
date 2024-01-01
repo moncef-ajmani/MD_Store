@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CartService {
+public class  CartService {
     private CartRepository cartRepository;
     private ProductRestClient productRestClient;
     private UserRestClient userRestClient;

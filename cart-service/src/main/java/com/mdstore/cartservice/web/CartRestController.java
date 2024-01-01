@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 public class CartRestController {
-
     private CartService cartService;
 
     public CartRestController(CartService cartService) {
@@ -34,7 +33,4 @@ public class CartRestController {
         }
         return ResponseEntity.badRequest().body(result);
     }
-
-
-
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OrderMapper {
-    private final ModelMapper modelMapper = new ModelMapper();
+    private  ModelMapper modelMapper = new ModelMapper();
 
     public OrderRequestDTO from (Order order){
         return modelMapper.map(order, OrderRequestDTO.class);
