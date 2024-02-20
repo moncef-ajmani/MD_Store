@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -33,11 +34,6 @@ public class AuthController {
     @Autowired
     @Qualifier("jwtAuthenticationProvider")
     JwtAuthenticationProvider refreshTokenAuthenticationProvider;
-
-    @GetMapping("/")
-    public String hello(){
-        return "Hello World";
-    }
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody SignupDTO signupDTO){

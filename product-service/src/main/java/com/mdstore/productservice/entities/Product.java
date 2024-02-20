@@ -1,5 +1,6 @@
 package com.mdstore.productservice.entities;
 
+import Enums.Category;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,5 +23,7 @@ public class Product {
     private int stockQuantity;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Image> images;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
 }

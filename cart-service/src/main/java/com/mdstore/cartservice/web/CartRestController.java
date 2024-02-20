@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class CartRestController {
     private CartService cartService;
 
@@ -20,9 +21,14 @@ public class CartRestController {
     public List<Cart> cartList(){
         return cartService.getAllCarts();
     }
+
     @GetMapping("/carts/{id}")
     public Cart findCartById(@PathVariable Long id){
         return cartService.findCartById(id);
+    }
+    @PostMapping("/createCart/{id}")
+    public Cart createCart(@PathVariable Long id){
+        return cartService.createCart(id);
     }
 
     @PostMapping("/carts/{id}/addItem")

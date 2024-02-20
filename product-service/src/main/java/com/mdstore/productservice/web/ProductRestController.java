@@ -1,5 +1,6 @@
 package com.mdstore.productservice.web;
 
+import Enums.Category;
 import com.mdstore.productservice.DTOs.ProductRequestDTO;
 import com.mdstore.productservice.DTOs.ProductResponseDTO;
 import com.mdstore.productservice.service.ProductService;
@@ -7,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class ProductRestController {
     private ProductService productService;
 
@@ -46,4 +49,6 @@ public class ProductRestController {
         String successMessage = "Product with ID " + id + " deleted successfully";
         return ResponseEntity.ok(successMessage);
     }
+
+
 }

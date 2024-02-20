@@ -12,6 +12,7 @@ import com.mdstore.cartservice.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,10 +31,15 @@ public class  CartService {
     }
 
     public List<Cart> getAllCarts(){
-
         return cartRepository.findAll().stream().map(c -> findCartById(c.getId())).collect(Collectors.toList());
     }
-
+    public Cart createCart(Long id){
+       return cartRepository.save(Cart.builder()
+                        .total(0)
+                        .userID(id)
+                        .date(new Date())
+                .build());
+    }
     public Cart findCartById(Long id){
 
         Cart cart = cartRepository.findById(id).get();
