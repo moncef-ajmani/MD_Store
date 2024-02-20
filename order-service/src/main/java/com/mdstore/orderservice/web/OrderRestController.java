@@ -9,6 +9,7 @@ import com.mdstore.orderservice.entities.OrderItem;
 import com.mdstore.orderservice.feignClient.PaymentRestClient;
 import com.mdstore.orderservice.feignClient.ProductRestClient;
 import com.mdstore.orderservice.feignClient.UserRestClient;
+import com.mdstore.orderservice.mapper.OrderItemMapper;
 import com.mdstore.orderservice.mapper.OrderMapper;
 import com.mdstore.orderservice.modal.Payment;
 import com.mdstore.orderservice.modal.Product;
@@ -23,21 +24,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class OrderRestController {
     private final OrderService orderService;
     private final PaymentRestClient paymentRestClient;
-    private final OrderMapper orderMapper;
+    private  OrderMapper orderMapper;
     private final ProductRestClient productRestClient;
     private final UserRestClient userRestClient;
+    private  OrderItemMapper orderItemMapper;
 
-    public OrderRestController(OrderService orderService, PaymentRestClient paymentRestClient, OrderMapper orderMapper, ProductRestClient productRestClient, UserRestClient userRestClient){
+    public OrderRestController(OrderService orderService, PaymentRestClient paymentRestClient, OrderMapper orderMapper, ProductRestClient productRestClient, OrderItemMapper orderItemMapper , UserRestClient userRestClient){
         this.orderService = orderService;
         this.paymentRestClient = paymentRestClient;
         this.orderMapper = orderMapper;
         this.productRestClient = productRestClient;
         this.userRestClient = userRestClient;
+        this.orderItemMapper = orderItemMapper;
 
     }
 
@@ -52,34 +56,8 @@ public class OrderRestController {
         return 0;
     }
     @PostMapping("/orders")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequestDTO orderRequestDTO){
+    public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO orderRequestDTO){
 
-        Order order = orderMapper.from(orderRequestDTO);
-        float amount = 0;
-        for(OrderItem orderItem: order.getOrderItems()){
-            Product p = productRestClient.getProductById(orderItem.getProductID());
-            if(p.getStockQuantity() - orderItem.getQuantity() > 0) {
-                amount += p.getPrice() * orderItem.getQuantity();
-                p.setStockQuantity(p.getStockQuantity()-orderItem.getQuantity());
-                productRestClient.updateProduct(p.getId(),new ProductRequestDTO(
-                        p.getName(),p.getPrice(),p.getDescription(),p.getStockQuantity(),p.getImages()
-                ));
-            }else{
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-        }
-        order.setOrderStatus("Done");
-        order.setDate(java.sql.Date.valueOf(LocalDate.now()));
-        order.setUser(userRestClient.getCustomerById(order.getUserID()));
-        order.setUserID(order.getUserID());
-        System.out.println(order);
-        PaymentRequestDTO paymentRequestDTO = new PaymentRequestDTO(order.getId(),amount);
-        ResponseEntity<Payment> paymentResponse = paymentRestClient.processPayment(paymentRequestDTO);
-        if(paymentResponse.getStatusCode() == HttpStatus.CREATED){
-            System.out.println(paymentRequestDTO);
-//            orderService.save(new OrderRequestDTO(order.getUserID(),order.getOrderItems()));
-            return new ResponseEntity<>(order,HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return orderService.save(orderRequestDTO);
     }
 }
