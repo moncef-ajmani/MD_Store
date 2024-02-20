@@ -17,10 +17,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
 import org.springframework.security.provisioning.UserDetailsManager;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -37,8 +34,13 @@ public class AuthController {
     @Qualifier("jwtAuthenticationProvider")
     JwtAuthenticationProvider refreshTokenAuthenticationProvider;
 
+    @GetMapping("/")
+    public String hello(){
+        return "Hello World";
+    }
+
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody SignupDTO signupDTO){
+    public ResponseEntity<Object> register(@RequestBody SignupDTO signupDTO){
         if(userDetailsManager.userExists(signupDTO.getEmail())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorDTO("User with this email already exists."));
         }

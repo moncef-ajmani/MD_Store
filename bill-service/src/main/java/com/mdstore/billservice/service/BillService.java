@@ -58,6 +58,7 @@ public class BillService {
                     .build();
             productItems.add(productItem);
         }
+        System.out.println(productItems);
         bill.setProductItems(productItems);
         return billRepository.save(bill);
 
